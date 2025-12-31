@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2025 ♥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2d1b2e 0%, #4a2c4a 50%, #5d3a5d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 182, 193, 0.4);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Envelope container */
+        .envelope-container {
+            position: relative;
+            z-index: 10;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .envelope-container.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f9f3f0;
+            border: 2px solid #d4a373;
+            border-radius: 3px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Front decorative flap - doesn't open */
+        .envelope-flap-front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 90px solid #ede1d8;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .envelope-flap-front::before {
+            content: '';
+            position: absolute;
+            bottom: -90px;
+            left: -140px;
+            width: 280px;
+            height: 90px;
+            border: 2px solid #d4a373;
+            border-top: none;
+            border-radius: 0 0 3px 3px;
+        }
+
+        /* Letter card that slides out */
+        .envelope-letter {
+            position: absolute;
+            width: 260px;
+            height: 200px;
+            background: linear-gradient(135deg, #fff9f5 0%, #fffef9 100%);
+            top: -20px;
+            left: 10px;
+            z-index: 1;
+            border-radius: 8px 8px 2px 2px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e6d4c8;
+        }
+
+        .envelope-letter::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #d4a373;
+            border-radius: 2px;
+        }
+
+        .envelope-letter::after {
+            content: '♥';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            color: #8b4789;
+            opacity: 0.6;
+        }
+
+        .envelope.opening .envelope-letter {
+            transform: translateY(-150px);
+        }
+
+        .wax-seal {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #8b4789;
+            border-radius: 50%;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 71, 137, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ffe8f5;
+        }
+
+        .wax-seal:hover {
+            transform: translateX(-50%) scale(1.15) rotate(10deg);
+            box-shadow: 0 6px 25px rgba(139, 71, 137, 0.7);
+        }
+
+        .wax-seal::before {
+            content: '✉';
+        }
+
+        .envelope.opening .wax-seal {
+            animation: sealBreak 0.6s ease forwards;
+        }
+
+        @keyframes sealBreak {
+            0% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.3) rotate(180deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(-50%) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Flipbook */
+        .flipbook-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease 1s;
+        }
+
+        .flipbook-container.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .flipbook {
+            position: relative;
+            width: 450px;
+            height: 315px;
+            perspective: 1500px;
+        }
+
+        .flipbook-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #d4a373;
+            border: 3px solid #8b6f47;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+        .flipbook-cover:hover {
+            transform: scale(1.02);
+        }
+
+        .flipbook-cover.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* Spiral Binding */
+        .spiral-binding {
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            bottom: 20px;
+            width: 30px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .spiral-ring {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #5a4030;
+            border-radius: 50%;
+            background: transparent;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .spiral-ring::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #6e5242;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .bookmark {
+            position: absolute;
+            top: 0;
+            right: 30%;
+            width: 60px;
+            height: 80px;
+            background: #8b4789;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .bookmark-btn {
+            background: #ffe8f5;
+            color: #8b4789;
+            border: none;
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            font-family: 'Georgia', serif;
+        }
+
+        .bookmark-btn:hover {
+            background: #ffd4eb;
+            transform: scale(1.05);
+        }
+
+        .flipbook-cover:hover .bookmark {
+            transform: translateY(-5px);
+        }
+
+        .flipbook-cover.flipped .bookmark {
+            display: none;
+        }
+
+        .flipbook-pages {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border: 2px solid #d4a373;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .page:hover {
+            filter: brightness(1.05);
+        }
+
+        /* Page corners that curl on hover */
+        .page::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            border-color: transparent #f0e6d8 transparent transparent;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .page:hover::before {
+            opacity: 0.8;
+        }
+
+        .page.turned {
+            transform: rotateY(-180deg);
+            cursor: default;
+        }
+
+        .page.turned:hover {
+            filter: none;
+        }
+
+        .page.turned::before {
+            display: none;
+        }
+
+        /* Visual hint arrows on pages */
+        .page-nav-hint {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: rgba(139, 71, 137, 0.3);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .page:hover .page-nav-hint {
+            opacity: 1;
+        }
+
+        .page-nav-hint.next {
+            right: 20px;
+        }
+
+        .page-nav-hint.prev {
+            left: 20px;
+        }
+
+        .page.turned .page-nav-hint {
+            display: none;
+        }
+
+        /* Touch device hint */
+        @media (hover: none) and (pointer: coarse) {
+            .page-nav-hint {
+                opacity: 0.5;
+            }
+            
+            .page:active .page-nav-hint {
+                opacity: 1;
+            }
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 25;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .nav-buttons.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: #8b4789;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 71, 137, 0.4);
+        }
+
+        .nav-btn:hover {
+            background: #6d3668;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 71, 137, 0.5);
+        }
+
+        .nav-btn:disabled {
+            background: #b07bb0;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: #8b4789;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 25;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(139, 71, 137, 0.4);
+        }
+
+        .close-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .close-btn:hover {
+            background: #6d3668;
+            transform: rotate(90deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .envelope {
+                width: 240px;
+                height: 154px;
+            }
+
+            .envelope-flap-front {
+                border-left: 120px solid transparent;
+                border-right: 120px solid transparent;
+                border-bottom: 77px solid #ede1d8;
+            }
+
+            .envelope-flap-front::before {
+                bottom: -77px;
+                left: -120px;
+                width: 240px;
+                height: 77px;
+            }
+
+            .envelope-letter {
+                width: 220px;
+                height: 170px;
+                top: -20px;
+                left: 10px;
+            }
+
+            .envelope.opening .envelope-letter {
+                transform: translateY(-130px);
+            }
+
+            .wax-seal {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                font-size: 20px;
+            }
+
+            .flipbook {
+                width: 380px;
+                height: 266px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .bookmark {
+                width: 55px;
+                height: 75px;
+            }
+
+            .bookmark-btn {
+                font-size: 9px;
+                padding: 5px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .envelope {
+                width: 200px;
+                height: 128px;
+            }
+
+            .envelope-flap-front {
+                border-left: 100px solid transparent;
+                border-right: 100px solid transparent;
+                border-bottom: 64px solid #ede1d8;
+            }
+
+            .envelope-flap-front::before {
+                bottom: -64px;
+                left: -100px;
+                width: 200px;
+                height: 64px;
+            }
+
+            .envelope-letter {
+                width: 180px;
+                height: 140px;
+                top: -15px;
+                left: 10px;
+            }
+
+            .envelope-letter::after {
+                font-size: 30px;
+            }
+
+            .envelope.opening .envelope-letter {
+                transform: translateY(-110px);
+            }
+
+            .wax-seal {
+                width: 40px;
+                height: 40px;
+                bottom: 15px;
+                font-size: 18px;
+            }
+
+            .bookmark {
+                width: 50px;
+                height: 70px;
+            }
+
+            .bookmark-btn {
+                font-size: 8px;
+                padding: 4px 8px;
+            }
+
+            .flipbook {
+                width: 300px;
+                height: 210px;
+            }
+
+            .spiral-ring {
+                width: 16px;
+                height: 16px;
+                border-width: 2px;
+            }
+
+            .spiral-ring::before {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Envelope -->
+    <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-letter"></div>
+            <div class="envelope-flap-front"></div>
+            <div class="wax-seal" id="waxSeal"></div>
+        </div>
+    </div>
+
+    <!-- Flipbook -->
+    <div class="flipbook-container" id="flipbookContainer">
+        <div class="flipbook">
+            <div class="spiral-binding">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+            <div class="flipbook-cover" id="flipbookCover">
+                <div class="bookmark">
+                    <button class="bookmark-btn" id="openBookBtn">OPEN</button>
+                </div>
+            </div>
+            <div class="flipbook-pages" id="flipbookPages">
+                <!-- Pages will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="nav-buttons" id="navButtons">
+        <button class="nav-btn" id="prevBtn" disabled>← Previous</button>
+        <button class="nav-btn" id="nextBtn">Next →</button>
+    </div>
+
+    <!-- Close button -->
+    <button class="close-btn" id="closeBtn">×</button>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '♥';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        createHearts();
+
+        // Envelope interaction
+        const waxSeal = document.getElementById('waxSeal');
+        const envelope = document.getElementById('envelope');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        const flipbookContainer = document.getElementById('flipbookContainer');
+        const flipbookCover = document.getElementById('flipbookCover');
+        const openBookBtn = document.getElementById('openBookBtn');
+        const navButtons = document.getElementById('navButtons');
+        const closeBtn = document.getElementById('closeBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const flipbookPages = document.getElementById('flipbookPages');
+
+        let currentPage = -1; // -1 means cover is showing
+        let totalPages = 0;
+        let coverOpened = false;
+
+        // Image paths - update these with your GitHub raw URLs
+        const coverImagePath = 'images/cover.jpg'; // Replace with your GitHub raw URL
+        const pageImagePaths = [
+            'images/page1.jpg',
+            'images/page2.jpg',
+            'images/page3.jpg',
+            'images/page4.jpg',
+            'images/photo5.png'
+            // Add more page paths as needed
+        ];
+
+        // Set cover image
+        flipbookCover.style.backgroundImage = `url(${coverImagePath})`;
+
+        // Create pages dynamically
+        function initializePages() {
+            totalPages = pageImagePaths.length;
+            
+            pageImagePaths.forEach((imagePath, index) => {
+                const page = document.createElement('div');
+                page.className = 'page';
+                page.style.backgroundImage = `url(${imagePath})`;
+                page.style.zIndex = totalPages - index;
+                page.dataset.pageIndex = index;
+                
+                // Add navigation hint arrow
+                const navHint = document.createElement('div');
+                navHint.className = 'page-nav-hint next';
+                navHint.textContent = '→';
+                page.appendChild(navHint);
+                
+                // Add click handler for page turning
+                page.addEventListener('click', (e) => {
+                    const rect = page.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const pageWidth = rect.width;
+                    
+                    // If click is on right half, go forward; left half, go backward
+                    if (clickX > pageWidth / 2) {
+                        // Right side - turn page forward
+                        if (currentPage < totalPages - 1 && index === currentPage) {
+                            currentPage++;
+                            updateNavigation();
+                        }
+                    } else {
+                        // Left side - turn page backward
+                        if (currentPage > 0 && index === currentPage - 1) {
+                            currentPage--;
+                            updateNavigation();
+                        }
+                    }
+                });
+                
+                flipbookPages.appendChild(page);
+            });
+            
+            updateNavigation();
+        }
+
+        // Initialize pages on load
+        initializePages();
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        flipbookPages.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+        
+        flipbookPages.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0 && currentPage > 0) {
+                    // Swipe right - go back
+                    currentPage--;
+                    updateNavigation();
+                } else if (swipeDistance < 0 && currentPage < totalPages - 1) {
+                    // Swipe left - go forward
+                    currentPage++;
+                    updateNavigation();
+                }
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!coverOpened || !flipbookContainer.classList.contains('visible')) {
+                return;
+            }
+            
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    updateNavigation();
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentPage > 0) {
+                    currentPage--;
+                    updateNavigation();
+                }
+            }
+        });
+
+        waxSeal.addEventListener('click', () => {
+            envelope.classList.add('opening');
+            setTimeout(() => {
+                envelopeContainer.classList.add('hidden');
+                setTimeout(() => {
+                    flipbookContainer.classList.add('visible');
+                    closeBtn.classList.add('visible');
+                }, 500);
+            }, 1400);
+        });
+
+        // Flipbook open button interaction
+        openBookBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!coverOpened) {
+                flipbookCover.classList.add('flipped');
+                coverOpened = true;
+                currentPage = 0;
+                setTimeout(() => {
+                    navButtons.classList.add('visible');
+                    updateNavigation();
+                }, 400);
+            }
+        });
+
+        // Navigation
+        function updateNavigation() {
+            const pages = flipbookPages.querySelectorAll('.page');
+            
+            prevBtn.disabled = currentPage <= 0;
+            nextBtn.disabled = currentPage >= totalPages - 1;
+            
+            pages.forEach((page, index) => {
+                if (index < currentPage) {
+                    page.classList.add('turned');
+                } else {
+                    page.classList.remove('turned');
+                }
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updateNavigation();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updateNavigation();
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            // Close flipbook
+            navButtons.classList.remove('visible');
+            closeBtn.classList.remove('visible');
+            flipbookContainer.classList.remove('visible');
+            
+            // Reset flipbook
+            setTimeout(() => {
+                flipbookCover.classList.remove('flipped');
+                coverOpened = false;
+                currentPage = -1;
+                const pages = flipbookPages.querySelectorAll('.page');
+                pages.forEach(page => page.classList.remove('turned'));
+            }, 600);
+            
+            // Show envelope again
+            setTimeout(() => {
+                envelopeContainer.classList.remove('hidden');
+                envelope.classList.remove('opening');
+            }, 800);
+        });
+    </script>
+</body>
+</html>
